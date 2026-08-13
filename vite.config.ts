@@ -5,5 +5,8 @@ export default defineConfig({
   plugins: [sveltekit()],
   optimizeDeps: {
     exclude: ['@electric-sql/pglite']
+  },
+  server: {
+    port: 7634
   }
 });
