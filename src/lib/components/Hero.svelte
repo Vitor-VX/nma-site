@@ -30,7 +30,7 @@
     <div class="hero__video reveal" use:reveal>
       <div class="hero__video reveal" use:reveal>
         <div class="hero__video-frame">
-          <video
+          <!-- <video
             src="/videos/vsl.mp4"
             poster="/videos/vsl-poster.jpg"
             controls
@@ -39,7 +39,7 @@
             onplay={playVideo}
           >
             <track kind="captions" />
-          </video>
+          </video> -->
         </div>
       </div>
     </div>
