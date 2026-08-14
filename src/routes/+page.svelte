@@ -1,42 +1,43 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import Hero from '$lib/components/Hero.svelte';
-  import VideoDemo from '$lib/components/VideoDemo.svelte';
-  import HowItWorks from '$lib/components/HowItWorks.svelte';
-  import Features from '$lib/components/Features.svelte';
-  import IntensitySection from '$lib/components/IntensitySection.svelte';
-  import SafetySection from '$lib/components/SafetySection.svelte';
-  import Requirements from '$lib/components/Requirements.svelte';
-  import FAQ from '$lib/components/FAQ.svelte';
-  import BetaForm from '$lib/components/BetaForm.svelte';
-  import FinalCTA from '$lib/components/FinalCTA.svelte';
-  import { trackEvent } from '$lib/analytics';
-  import { scrollToBeta } from '$lib/utils/scroll';
+  import { onMount } from "svelte";
+  import Hero from "$lib/components/Hero.svelte";
+  import VideoDemo from "$lib/components/VideoDemo.svelte";
+  import HowItWorks from "$lib/components/HowItWorks.svelte";
+  import Features from "$lib/components/Features.svelte";
+  import IntensitySection from "$lib/components/IntensitySection.svelte";
+  import SafetySection from "$lib/components/SafetySection.svelte";
+  import Requirements from "$lib/components/Requirements.svelte";
+  import FAQ from "$lib/components/FAQ.svelte";
+  import BetaForm from "$lib/components/BetaForm.svelte";
+  import FinalCTA from "$lib/components/FinalCTA.svelte";
+  import { trackEvent } from "$lib/analytics";
+  import { scrollToBeta } from "$lib/utils/scroll";
 
   let showSticky = $state(false);
 
   onMount(() => {
-    const hero = document.querySelector('.hero');
+    const hero = document.querySelector(".hero");
     if (!hero) return;
     const io = new IntersectionObserver(
       (entries) => {
         const visible = entries[0]?.isIntersecting ?? true;
         showSticky = !visible;
       },
-      { threshold: 0.05 }
+      { threshold: 0.05 },
     );
     io.observe(hero);
     return () => io.disconnect();
   });
 
   function stickyCta() {
-    trackEvent('hero_cta_click');
+    trackEvent("hero_cta_click");
     scrollToBeta();
   }
 </script>
 
 <svelte:head>
   <title>Não Mexe Aí — O celular enlouquece. Você continua no controle.</title>
+  <script src="https://cdn-reach.hostinger.com/js/embed.js"></script>
 </svelte:head>
 
 <Hero />
@@ -74,7 +75,9 @@
     box-shadow: var(--shadow-primary);
     opacity: 0;
     transform: translateY(120%);
-    transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+    transition:
+      opacity 0.3s var(--ease),
+      transform 0.3s var(--ease);
     pointer-events: none;
   }
 

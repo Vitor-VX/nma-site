@@ -30,8 +30,8 @@
     <div class="hero__video reveal" use:reveal>
       <div class="hero__video reveal" use:reveal>
         <div class="hero__video-frame">
-          <!-- <video
-            src="/videos/vsl.mp4"
+          <video
+            src="https://files.botsync.online/nma/e655482c4b589f301e39c00f45681c94_1.mp4"
             poster="/videos/vsl-poster.jpg"
             controls
             playsinline
@@ -39,7 +39,7 @@
             onplay={playVideo}
           >
             <track kind="captions" />
-          </video> -->
+          </video>
         </div>
       </div>
     </div>

@@ -1,17 +1,17 @@
 <script lang="ts">
-  import { Loader2, CheckCircle2, AlertCircle, Lock } from '@lucide/svelte';
-  import { submitBetaSignup } from '$lib/api/beta';
-  import { trackEvent } from '$lib/analytics';
-  import type { BetaSignup, BetaSignupState } from '$lib/types/beta';
-  import { reveal } from '$lib/actions/reveal';
-  import { goto } from '$app/navigation';
+  import { Loader2, CheckCircle2, AlertCircle, Lock } from "@lucide/svelte";
+  import { submitBetaSignup } from "$lib/api/beta";
+  import { trackEvent } from "$lib/analytics";
+  import type { BetaSignup, BetaSignupState } from "$lib/types/beta";
+  import { reveal } from "$lib/actions/reveal";
+  import { goto } from "$app/navigation";
 
-  let name = $state('');
-  let email = $state('');
+  let name = $state("");
+  let email = $state("");
   let agreed = $state(false);
   let touched = $state(false);
-  let formState = $state<BetaSignupState>('idle');
-  let errorMsg = $state('');
+  let formState = $state<BetaSignupState>("idle");
+  let errorMsg = $state("");
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -22,22 +22,22 @@
     name.trim().length >= 2 &&
       emailRegex.test(email.trim()) &&
       agreed &&
-      formState !== 'loading'
+      formState !== "loading",
   );
 
   function getUtms(): Partial<BetaSignup> {
-    if (typeof window === 'undefined') return {};
+    if (typeof window === "undefined") return {};
     const params = new URLSearchParams(window.location.search);
     return {
-      source: params.get('utm_source') ?? undefined,
-      medium: params.get('utm_medium') ?? undefined,
-      campaign: params.get('utm_campaign') ?? undefined,
-      content: params.get('utm_content') ?? undefined
+      source: params.get("utm_source") ?? undefined,
+      medium: params.get("utm_medium") ?? undefined,
+      campaign: params.get("utm_campaign") ?? undefined,
+      content: params.get("utm_content") ?? undefined,
     };
   }
 
   function onFieldFocus() {
-    trackEvent('beta_form_started');
+    trackEvent("beta_form_started");
   }
 
   async function handleSubmit(e: Event) {
@@ -45,23 +45,23 @@
     touched = true;
     if (!canSubmit) return;
 
-    formState = 'loading';
-    errorMsg = '';
+    formState = "loading";
+    errorMsg = "";
 
     const result = await submitBetaSignup({
       name: name.trim(),
       email: email.trim(),
-      ...getUtms()
+      ...getUtms(),
     });
 
     if (result.ok) {
-      trackEvent('beta_form_submitted');
-      formState = 'success';
-      goto('/obrigado');
+      trackEvent("beta_form_submitted");
+      formState = "success";
+      goto("/obrigado");
     } else {
-      trackEvent('beta_form_error', { message: result.message });
-      formState = 'error';
-      errorMsg = result.message ?? 'Não foi possível enviar. Tente novamente.';
+      trackEvent("beta_form_error", { message: result.message });
+      formState = "error";
+      errorMsg = result.message ?? "Não foi possível enviar. Tente novamente.";
     }
   }
 </script>
@@ -73,15 +73,17 @@
         <span class="eyebrow">Beta fechado</span>
         <h2>Quer testar antes de todo mundo?</h2>
         <p>
-          Estamos preparando o Não Mexe Aí para publicação no Google Play e procurando usuários
-          Android para participar do teste fechado.
+          Estamos preparando o Não Mexe Aí para publicação no Google Play e
+          procurando usuários Android para participar do teste fechado.
         </p>
         <p class="beta__sub">
-          Você receberá acesso gratuito ao aplicativo durante o período de testes.
+          Você receberá acesso gratuito ao aplicativo durante o período de
+          testes.
         </p>
       </div>
 
-      <form class="beta__form" onsubmit={handleSubmit} novalidate>
+      <div data-reach-form="1eeb0d03-d388-48e6-a507-f91a9c1af7ff"></div>
+      <!-- <form class="beta__form" onsubmit={handleSubmit} novalidate>
         <div class="field">
           <label for="beta-name">Nome</label>
           <input
@@ -152,7 +154,7 @@
           <Lock size={13} /> Ao participar, você concorda em receber comunicações relacionadas
           exclusivamente ao teste do Não Mexe Aí.
         </p>
-      </form>
+      </form> -->
     </div>
   </div>
 </section>
@@ -163,10 +165,14 @@
   }
 
   .beta::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
-    background: radial-gradient(60% 50% at 50% 30%, rgba(239, 35, 60, 0.08), transparent 70%);
+    background: radial-gradient(
+      60% 50% at 50% 30%,
+      rgba(239, 35, 60, 0.08),
+      transparent 70%
+    );
     pointer-events: none;
   }
 
@@ -174,8 +180,11 @@
     position: relative;
     max-width: 560px;
     margin-inline: auto;
-    background:
-      radial-gradient(120% 60% at 50% 0%, rgba(239, 35, 60, 0.1), transparent 60%),
+    background: radial-gradient(
+        120% 60% at 50% 0%,
+        rgba(239, 35, 60, 0.1),
+        transparent 60%
+      ),
       var(--surface);
     border: 1px solid rgba(239, 35, 60, 0.22);
     border-radius: var(--radius-xl);
@@ -223,14 +232,16 @@
     color: var(--text);
   }
 
-  .field input[type='text'],
-  .field input[type='email'] {
+  .field input[type="text"],
+  .field input[type="email"] {
     padding: 14px 16px;
     background: var(--background);
     border: 1px solid var(--border-strong);
     border-radius: var(--radius);
     color: var(--text);
-    transition: border-color 0.18s var(--ease), box-shadow 0.18s var(--ease);
+    transition:
+      border-color 0.18s var(--ease),
+      box-shadow 0.18s var(--ease);
   }
 
   .field input::placeholder {
@@ -246,7 +257,7 @@
   .field__err {
     font-size: 0.82rem;
     color: var(--error);
-  font-weight: 500;
+    font-weight: 500;
   }
 
   .field--check {
@@ -277,7 +288,9 @@
     border: 1.5px solid var(--border-strong);
     background: var(--background);
     margin-top: 1px;
-    transition: background 0.18s var(--ease), border-color 0.18s var(--ease);
+    transition:
+      background 0.18s var(--ease),
+      border-color 0.18s var(--ease);
     position: relative;
   }
 
@@ -287,7 +300,7 @@
   }
 
   .check input:checked + .check__box::after {
-    content: '';
+    content: "";
     position: absolute;
     left: 6px;
     top: 2px;
@@ -343,10 +356,14 @@
   }
 
   @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .spin { animation: none; }
+    .spin {
+      animation: none;
+    }
   }
 </style>
